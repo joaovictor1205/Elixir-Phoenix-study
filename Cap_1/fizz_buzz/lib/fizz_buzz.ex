@@ -1,22 +1,23 @@
 defmodule FizzBuzz do
-
   def build(file_name) do
     file_name
     |> File.read()
     |> handle_file_read()
   end
 
-  #defp -> função privada
+  # defp -> função privada
   defp handle_file_read({:ok, result}) do
-    result = 
+    result =
       result
       |> String.split(",")
       |> Enum.map(&convert_and_evaluate_numbers/1)
 
-    {:ok, result} # Tupla de sucesso
+    # Tupla de sucesso
+    {:ok, result}
   end
 
-  defp handle_file_read({:error, reason}), do: {:error, "Error on file: #{reason}"} # Tupla de erro
+  # Tupla de erro
+  defp handle_file_read({:error, reason}), do: {:error, "Error on file: #{reason}"}
 
   defp convert_and_evaluate_numbers(elem) do
     elem
@@ -30,5 +31,4 @@ defmodule FizzBuzz do
   defp evaluate_numbers(number) when rem(number, 5) == 0, do: :buzz
   # Se o número não 'casar' com nenhum caso acima, retorna o próprio número
   defp evaluate_numbers(number), do: number
-
 end
