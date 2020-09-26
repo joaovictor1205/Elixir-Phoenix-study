@@ -6,24 +6,29 @@ defmodule FizzBuzz do
     |> handle_file_read()
   end
 
-  def handle_file_read({:ok, result}) do
-    result
-    |> String.split(",")
-    |> Enum.map(&convert_and_evaluate_numbers/1)
+  #defp -> função privada
+  defp handle_file_read({:ok, result}) do
+    result = 
+      result
+      |> String.split(",")
+      |> Enum.map(&convert_and_evaluate_numbers/1)
+
+    {:ok, result} # Tupla de sucesso
   end
 
-  def handle_file_read({:error, reason}), do: "Error on file: #{reason}"
+  defp handle_file_read({:error, reason}), do: {:error, "Error on file: #{reason}"} # Tupla de erro
 
-  def convert_and_evaluate_numbers(elem) do
-    number = String.to_integer(elem)
-    evaluate_numbers(number)
+  defp convert_and_evaluate_numbers(elem) do
+    elem
+    |> String.to_integer()
+    |> evaluate_numbers()
   end
 
   # Guard
-  def evaluate_numbers(number) when rem(number, 3) == 0 and rem(number, 5) == 0, do: :fizzbuzz
-  def evaluate_numbers(number) when rem(number, 3) == 0, do: :fizz
-  def evaluate_numbers(number) when rem(number, 5) == 0, do: :buzz
+  defp evaluate_numbers(number) when rem(number, 3) == 0 and rem(number, 5) == 0, do: :fizzbuzz
+  defp evaluate_numbers(number) when rem(number, 3) == 0, do: :fizz
+  defp evaluate_numbers(number) when rem(number, 5) == 0, do: :buzz
   # Se o número não 'casar' com nenhum caso acima, retorna o próprio número
-  def evaluate_numbers(number), do: number
+  defp evaluate_numbers(number), do: number
 
 end
