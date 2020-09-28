@@ -27,7 +27,7 @@ defmodule ExMon do
 
   defp do_move({:ok, move}) do
     case move do
-      :move_heal -> "Cura realizada!"
+      :move_heal -> Actions.heal()
       move -> Actions.attack(move)
     end
 
