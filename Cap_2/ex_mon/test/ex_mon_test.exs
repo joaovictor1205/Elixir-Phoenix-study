@@ -26,4 +26,32 @@ defmodule ExMonTest do
     end
   end
 
+  describe "make_move/1" do
+    setup do
+      player = Player.build("João", :chute, :soco, :cura)
+      capture_io(fn ->
+        ExMon.start_game(player)
+      end)
+      :ok
+    end
+
+    test "when the move is valid, do the move, and the computer makes a move" do
+      messages =
+        capture_io(fn ->
+          ExMon.make_move(:chute)
+        end)
+
+      assert messages =~ "The Player has attacked"
+    end
+
+    test "when the move is invalid, returns an error message" do
+      messages =
+        capture_io(fn ->
+          ExMon.make_move(:err)
+        end)
+
+      assert messages =~ "Invalid move"
+    end
+  end
+
 end
