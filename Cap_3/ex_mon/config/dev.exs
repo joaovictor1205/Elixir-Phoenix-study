@@ -4,7 +4,7 @@ use Mix.Config
 config :ex_mon, ExMon.Repo,
   username: "postgres",
   password: "postgres",
-  database: "phoenixAPI",
+  database: "elixirphoenixcourse",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
