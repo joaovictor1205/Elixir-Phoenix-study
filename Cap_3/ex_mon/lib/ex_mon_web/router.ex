@@ -5,14 +5,25 @@ defmodule ExMonWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # Autenticação JWT
+  pipeline :auth do
+    plug ExMonWeb.Auth.Pipeline
+  end
+
   scope "/api", ExMonWeb do
     pipe_through :api
-    resources "/trainers", TrainersController, only: [:create, :show, :delete, :update]
-    resources "/trainer_pokemons", TrainerPokemonsController, only: [:create, :show, :delete, :update]
+    post "/trainers", TrainersController, :create
 
     post "/trainers/signin", TrainersController, :sign_in
 
     get "/pokemons/:name", PokemonsController, :show
+  end
+
+  # Rotas que precisam de Autenticação JWT
+  scope "/api", ExMonWeb do
+    pipe_through [:api, :auth]
+    resources "/trainers", TrainersController, only: [:show, :delete, :update]
+    resources "/trainer_pokemons", TrainerPokemonsController, only: [:create, :show, :delete, :update]
   end
 
   # Enables LiveDashboard only for development
