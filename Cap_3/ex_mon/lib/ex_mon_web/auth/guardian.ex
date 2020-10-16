@@ -20,7 +20,7 @@ defmodule ExMonWeb.Auth.Guardian do
     end
   end
 
-  def validate_password(%Trainer{password: password, password_hash: hash} = trainer, password) do
+  def validate_password(%Trainer{password_hash: hash} = trainer, password) do
     case Argon2.verify_pass(password, hash) do
       true -> create_token(trainer)
       false -> {:error, :unauthorized}
